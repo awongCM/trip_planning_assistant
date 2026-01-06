@@ -15,6 +15,7 @@ train = "trip_planning_assistant.main:train"
 replay = "trip_planning_assistant.main:replay"
 test = "trip_planning_assistant.main:test"
 run_with_trigger = "trip_planning_assistant.main:run_with_trigger"
+run_interactive = "trip_planning_assistant.main:run_interactive"
 
 [build-system]
 requires = ["hatchling"]

@@ -1,0 +1,24 @@
+{
+  "name": "John Doe",
+  "profession": "AI Engineer",
+  "home_location": "San Francisco, California",
+  "travel_styles": [
+    "cultural",
+    "adventure",
+    "comfort"
+  ],
+  "interests": [
+    "AI Agents",
+    "technology museums",
+    "local cuisine",
+    "historic sites",
+    "hiking"
+  ],
+  "accommodation_preferences": [
+    "boutique hotels",
+    "airbnb"
+  ],
+  "dietary_restrictions": [],
+  "mobility_requirements": null,
+  "traveling_with": "partner"
+}
