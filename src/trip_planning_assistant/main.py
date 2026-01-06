@@ -5,6 +5,10 @@ import json
 from datetime import datetime
 from pathlib import Path
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 from trip_planning_assistant.crew import TripPlanningAssistant
 from trip_planning_assistant.config import UserPreferences, TripInputs
 from trip_planning_assistant.utils import (
