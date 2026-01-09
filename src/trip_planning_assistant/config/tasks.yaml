@@ -1,18 +1,71 @@
-research_task:
+research_destination_task:
   description: >
-    Conduct a thorough research about {topic}
-    Make sure you find any interesting and relevant information given
-    the current year is 2025.
+    Research the destination '{destination}' considering the travel dates '{start_date}' to '{end_date}'.
+    Analyze weather conditions, cultural events, safety ratings, visa requirements,
+    local attractions, and best times to visit. Consider the user's preferences: {preferences}.
+    Provide insights on why this destination is ideal for {travelers_count} travelers with a budget of ${budget}.
   expected_output: >
-    A list with 10 bullet points of the most relevant information about {topic}
-  agent: researcher
+    A comprehensive destination brief including: climate overview, top attractions,
+    cultural highlights, safety information, visa requirements, and personalized recommendations.
+    Format as natural language narrative suitable for travel planning.
+  agent: destination_researcher
 
-reporting_task:
+search_flights_task:
   description: >
-    Review the context you got and expand each topic into a full section for a report.
-    Make sure the report is detailed and contains any and all relevant information.
+    Search for flights from {origin} to {destination} departing on {start_date} and returning on {end_date}.
+    Find options for {travelers_count} travelers with a max budget of ${budget}.
+    Use real-time flight data to identify the cheapest options while considering:
+    - Total flight cost (economy class)
+    - Flight duration and number of layovers
+    - Departure and arrival times
+    - Airline ratings and reliability
   expected_output: >
-    A fully fledge reports with the mains topics, each with a full section of information.
-    Formatted as markdown without '```'
-  agent: reporting_analyst
-  output_file: report.md
+    A ranked list of flight options (top 5) with: airline, price per person, total cost,
+    duration, layovers, departure/arrival times, and cost-effectiveness score.
+    Include natural language recommendations explaining why each option is valuable.
+  agent: flight_searcher
+
+find_hotels_task:
+  description: >
+    Search for hotels in {destination} for {travelers_count} travelers.
+    Travel dates: {start_date} to {end_date}. Budget: ${budget}.
+    Filter by: location quality, guest ratings, available amenities (wifi, gym, kitchen, etc.),
+    and proximity to key attractions. Match user preferences: {preferences}.
+  expected_output: >
+    A curated list of hotel recommendations (top 5) including: hotel name, price per night,
+    total stay cost, location, amenities, guest rating, and why it's recommended.
+    Explain the value proposition and suitability for this trip.
+  agent: hotel_finder
+
+convert_budget_task:
+  description: >
+    Analyze and allocate the total budget of ${budget} across the trip.
+    Convert costs to the local currency for {destination}.
+    Provide a budget breakdown showing: estimated flight costs, accommodation costs,
+    daily activity/food budget, and contingency reserves.
+    Use current real-time exchange rates for accurate conversion.
+  expected_output: >
+    A detailed budget analysis including: total budget, currency conversion rates,
+    cost breakdown by category (flights, hotels, activities, meals, transport),
+    daily spending allowance, and money-saving recommendations.
+    Format as both summary and detailed breakdown.
+  agent: currency_converter
+
+build_itinerary_task:
+  description: >
+    Create a detailed day-by-day itinerary for {travelers_count} travelers visiting {destination}
+    from {start_date} to {end_date}.
+    Based on the destination research, flight selection, and hotel choice,
+    structure the plan with: must-visit attractions, local restaurant recommendations,
+    transportation options, practical logistics, and daily schedules.
+    Ensure the itinerary balances sightseeing, relaxation, and authentic experiences.
+  expected_output: >
+    A comprehensive travel itinerary formatted for both display and export including:
+    - Day-by-day breakdown with times and activities
+    - Must-visit attractions with descriptions
+    - Restaurant recommendations with types (local, fine dining, street food, etc.)
+    - Local transportation options and estimated costs
+    - Practical travel tips and packing suggestions
+    - A summary suitable for PDF/Excel export with formatting ready for printing
+  agent: itinerary_builder
+  output_file: trip_itinerary.md

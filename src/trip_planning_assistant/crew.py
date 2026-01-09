@@ -2,6 +2,13 @@ from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 from crewai.agents.agent_builder.base_agent import BaseAgent
 from typing import List
+from trip_planning_assistant.tools import (
+    FlightSearchTool,
+    HotelSearchTool,
+    WeatherTool,
+    CurrencyConversionTool
+)
+
 # If you want to run a snippet of code before or after the crew starts,
 # you can use the @before_kickoff and @after_kickoff decorators
 # https://docs.crewai.com/concepts/crews#example-crew-class-with-decorators
@@ -20,16 +27,41 @@ class TripPlanningAssistant():
     # If you would like to add tools to your agents, you can learn more about it here:
     # https://docs.crewai.com/concepts/agents#agent-tools
     @agent
-    def researcher(self) -> Agent:
+    def destination_researcher(self) -> Agent:
         return Agent(
-            config=self.agents_config['researcher'], # type: ignore[index]
+            config=self.agents_config['destination_researcher'],
+            tools=[WeatherTool()],
             verbose=True
         )
 
     @agent
-    def reporting_analyst(self) -> Agent:
+    def flight_searcher(self) -> Agent:
         return Agent(
-            config=self.agents_config['reporting_analyst'], # type: ignore[index]
+            config=self.agents_config['flight_searcher'],
+            tools=[FlightSearchTool()],
+            verbose=True
+        )
+
+    @agent
+    def hotel_finder(self) -> Agent:
+        return Agent(
+            config=self.agents_config['hotel_finder'],
+            tools=[HotelSearchTool()],
+            verbose=True
+        )
+
+    @agent
+    def currency_converter(self) -> Agent:
+        return Agent(
+            config=self.agents_config['currency_converter'],
+            tools=[CurrencyConversionTool()],
+            verbose=True
+        )
+
+    @agent
+    def itinerary_builder(self) -> Agent:
+        return Agent(
+            config=self.agents_config['itinerary_builder'],
             verbose=True
         )
 
@@ -37,16 +69,34 @@ class TripPlanningAssistant():
     # task dependencies, and task callbacks, check out the documentation:
     # https://docs.crewai.com/concepts/tasks#overview-of-a-task
     @task
-    def research_task(self) -> Task:
+    def research_destination_task(self) -> Task:
         return Task(
-            config=self.tasks_config['research_task'], # type: ignore[index]
+            config=self.tasks_config['research_destination_task'],
         )
 
     @task
-    def reporting_task(self) -> Task:
+    def search_flights_task(self) -> Task:
         return Task(
-            config=self.tasks_config['reporting_task'], # type: ignore[index]
-            output_file='report.md'
+            config=self.tasks_config['search_flights_task'],
+        )
+
+    @task
+    def find_hotels_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['find_hotels_task'],
+        )
+
+    @task
+    def convert_budget_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['convert_budget_task'],
+        )
+
+    @task
+    def build_itinerary_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['build_itinerary_task'],
+            output_file='trip_itinerary.md'
         )
 
     @crew
@@ -56,9 +106,8 @@ class TripPlanningAssistant():
         # https://docs.crewai.com/concepts/knowledge#what-is-knowledge
 
         return Crew(
-            agents=self.agents, # Automatically created by the @agent decorator
-            tasks=self.tasks, # Automatically created by the @task decorator
+            agents=self.agents,
+            tasks=self.tasks,
             process=Process.sequential,
             verbose=True,
-            # process=Process.hierarchical, # In case you wanna use that instead https://docs.crewai.com/how-to/Hierarchical/
         )
