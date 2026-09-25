@@ -4,9 +4,7 @@ version = "0.1.0"
 description = "trip-planning-assistant using crewAI"
 authors = [{ name = "Your Name", email = "you@example.com" }]
 requires-python = ">=3.10,<3.14"
-dependencies = [
-    "crewai[tools]==1.7.2"
-]
+dependencies = ["crewai[tools]==1.7.2"]
 
 [project.scripts]
 trip_planning_assistant = "trip_planning_assistant.main:run"
@@ -15,6 +13,7 @@ train = "trip_planning_assistant.main:train"
 replay = "trip_planning_assistant.main:replay"
 test = "trip_planning_assistant.main:test"
 run_with_trigger = "trip_planning_assistant.main:run_with_trigger"
+run_interactive = "trip_planning_assistant.main:run_interactive"
 
 [build-system]
 requires = ["hatchling"]
