@@ -1,54 +1,73 @@
-# TripPlanningAssistant Crew
+# Trip Planning Assistant Crew
 
-Welcome to the TripPlanningAssistant Crew project, powered by [crewAI](https://crewai.com). This template is designed to help you set up a multi-agent AI system with ease, leveraging the powerful and flexible framework provided by crewAI. Our goal is to enable your agents to collaborate effectively on complex tasks, maximizing their collective intelligence and capabilities.
+Multi-agent family trip planner powered by [CrewAI](https://crewai.com). Five agents work in sequence to research a destination, draft an itinerary, estimate budget and links, and produce **`trip_plan.md`**.
 
-## Installation
+## Prerequisites
 
-Ensure you have Python >=3.10 <3.14 installed on your system. This project uses [UV](https://docs.astral.sh/uv/) for dependency management and package handling, offering a seamless setup and execution experience.
+- Python >=3.10, <3.14
+- [UV](https://docs.astral.sh/uv/) (recommended) or `crewai install`
 
-First, if you haven't already, install uv:
+## Setup
+
+1. Install dependencies:
 
 ```bash
 pip install uv
+uv sync
 ```
 
-Next, navigate to your project directory and install the dependencies:
-
-(Optional) Lock the dependencies and install them by using the CLI command:
-```bash
-crewai install
-```
-### Customizing
-
-**Add your `OPENAI_API_KEY` into the `.env` file**
-
-- Modify `src/trip_planning_assistant/config/agents.yaml` to define your agents
-- Modify `src/trip_planning_assistant/config/tasks.yaml` to define your tasks
-- Modify `src/trip_planning_assistant/crew.py` to add your own logic, tools and specific args
-- Modify `src/trip_planning_assistant/main.py` to add custom inputs for your agents and tasks
-
-## Running the Project
-
-To kickstart your crew of AI agents and begin task execution, run this from the root folder of your project:
+2. Copy environment template and add API keys:
 
 ```bash
-$ crewai run
+cp .env.example .env
 ```
 
-This command initializes the trip-planning-assistant Crew, assembling the agents and assigning them tasks as defined in your configuration.
+Set **`OPENAI_API_KEY`** and **`SERPER_API_KEY`** in `.env`.
 
-This example, unmodified, will run the create a `report.md` file with the output of a research on LLMs in the root folder.
+3. Edit trip inputs:
 
-## Understanding Your Crew
+- **Per trip:** `src/trip_planning_assistant/config/trip_request.yaml`
+- **Family profile:** `knowledge/user_preference.txt`
 
-The trip-planning-assistant Crew is composed of multiple AI agents, each with unique roles, goals, and tools. These agents collaborate on a series of tasks, defined in `config/tasks.yaml`, leveraging their collective skills to achieve complex objectives. The `config/agents.yaml` file outlines the capabilities and configurations of each agent in your crew.
+## Run
 
-## Support
+```bash
+uv run trip_planning_assistant
+```
 
-For support, questions, or feedback regarding the TripPlanningAssistant Crew or crewAI.
-- Visit our [documentation](https://docs.crewai.com)
-- Reach out to us through our [GitHub repository](https://github.com/joaomdmoura/crewai)
-- [Join our Discord](https://discord.com/invite/X4JWnZnxPb)
-- [Chat with our docs](https://chatg.pt/DWjSBZn)
+CLI overrides (only flags you pass replace YAML values):
 
-Let's create wonders together with the power and simplicity of crewAI.
+```bash
+uv run trip_planning_assistant --destination Kyoto --pace relaxed
+```
+
+Alternative:
+
+```bash
+crewai run
+```
+
+Note: For CLI overrides, prefer `uv run trip_planning_assistant` so arguments are passed to `main.py`.
+
+## Output
+
+- **`trip_plan.md`** in the project root (gitignored by default)
+
+## Tests
+
+```bash
+uv sync
+uv pip install pytest
+uv run pytest
+```
+
+Unit tests cover trip input loading and validation only (no live LLM calls).
+
+## Design docs
+
+- Spec: `docs/superpowers/specs/2026-09-25-trip-planning-p1-design.md`
+- Plan: `docs/superpowers/plans/2026-09-25-trip-planning-p1-implementation.md`
+
+## Cost note
+
+Each run uses OpenAI and Serper API credits; full crew runs can take several minutes.

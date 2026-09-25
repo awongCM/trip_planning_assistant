@@ -1,18 +1,59 @@
-research_task:
+planning_brief_task:
   description: >
-    Conduct a thorough research about {topic}
-    Make sure you find any interesting and relevant information given
-    the current year is 2025.
+    Using crew knowledge (family profile) and the trip request, write a planning brief for
+    {destination} ({start_date} to {end_date}). Include: trip goals, traveler needs,
+    budget target ({budget} {budget_currency}), pace ({pace}), interests ({interests}),
+    constraints from trip notes ({trip_notes}), and non-negotiables. Call out any conflict
+    between family knowledge and this trip.
   expected_output: >
-    A list with 10 bullet points of the most relevant information about {topic}
-  agent: researcher
+    Markdown planning brief with headings: Objectives, Travelers, Constraints, Success criteria,
+    Risks and open questions.
+  agent: trip_strategist
 
-reporting_task:
+destination_research_task:
   description: >
-    Review the context you got and expand each topic into a full section for a report.
-    Make sure the report is detailed and contains any and all relevant information.
+    Research {destination} for family travel between {start_date} and {end_date}. Use web
+    search to verify current information. Cover: best areas to stay, weather and seasonality,
+    family-friendly activities aligned with {interests}, local transport, and safety basics.
+    Cite URLs from search results.
   expected_output: >
-    A fully fledge reports with the mains topics, each with a full section of information.
-    Formatted as markdown without '```'
-  agent: reporting_analyst
-  output_file: report.md
+    Markdown research memo with sections and bullet points; include source URLs where possible.
+  agent: destination_researcher
+
+itinerary_draft_task:
+  description: >
+    Create a day-by-day itinerary from {start_date} through {end_date} for {destination}.
+    Use the planning brief and research. Match pace {pace} for travelers:
+    {travelers_summary}. Include morning/afternoon/evening blocks, meal windows, transit
+    hints, and flexibility notes. Do not claim anything is booked.
+  expected_output: >
+    Markdown itinerary with a subsection per day (Day N — weekday and date).
+  agent: itinerary_architect
+
+budget_and_links_task:
+  description: >
+    Build a budget estimate for the trip to {destination} ({start_date} to {end_date}) against
+    {budget} {budget_currency}. Use web search to find representative costs and useful booking
+    search links (flights from {home_airport}, lodging, activities). Group links by category.
+    State assumptions clearly; do not claim purchases or holds.
+  expected_output: >
+    Markdown with a budget table (category, low-high estimate, assumptions) and a categorized link list.
+  agent: budget_and_links_analyst
+
+finalize_trip_plan_task:
+  description: >
+    Produce the final family trip plan for {destination}. Merge the planning brief, research,
+    itinerary, and budget/links into one document with EXACTLY these top-level sections:
+    1) # Trip overview
+    2) ## Family fit & logistics (kid pacing, access, meals — use {travelers_summary})
+    3) ## Day-by-day itinerary
+    4) ## Budget estimate
+    5) ## Packing & health (general tips; say to verify medical advice)
+    6) ## Links & sources
+    7) ## Open questions & next steps
+    Use markdown only (no wrapping the whole report in a code fence). Never state that anything
+    is already booked; use search, consider, and verify availability language.
+  expected_output: >
+    Complete trip plan markdown with all seven sections above.
+  agent: family_trip_editor
+  output_file: trip_plan.md

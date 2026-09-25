@@ -1,4 +1,13 @@
-User name is John Doe.
-User is an AI Engineer.
-User is interested in AI Agents.
-User is based in San Francisco, California.
+Family profile (example — replace with your household).
+
+Travelers: two adults and one child (age 8).
+Home region: San Francisco Bay Area; typical departure airports SFO or OAK.
+
+Pace: moderate — one major activity per half-day; avoid stacking late nights.
+Sleep: child needs quiet evening; prefer accommodations with separate sleeping areas when possible.
+Flights: no red-eye departures; max one connection; prefer aisle seats for adults.
+Mobility: stroller-friendly routes appreciated; limit stairs without elevators.
+Food: one picky eater (mild); enjoy local food markets; need occasional familiar options for the child.
+Budget style: mid-range — splurge on one special meal per trip, otherwise value-conscious.
+Interests: interactive museums, parks, light hiking, street food, cultural neighborhoods.
+Avoid: extreme adventure sports, very crowded nightclub districts.
