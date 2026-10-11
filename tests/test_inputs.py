@@ -2,8 +2,13 @@ from pathlib import Path
 
 import pytest
 
+import os
+
+import pytest
+
 from trip_planning_assistant.inputs import (
     build_kickoff_inputs,
+    check_required_env,
     load_trip_request,
     merge_cli_overrides,
     parse_args,
@@ -66,6 +71,13 @@ def test_load_default_trip_request():
 def test_missing_required_field():
     with pytest.raises(ValueError, match="Missing required field"):
         validate_trip_request({"destination": "X"})
+
+
+def test_check_required_env_missing(monkeypatch):
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    monkeypatch.delenv("SERPER_API_KEY", raising=False)
+    with pytest.raises(RuntimeError, match="OPENAI_API_KEY"):
+        check_required_env()
 
 
 def test_example_yaml_exists():

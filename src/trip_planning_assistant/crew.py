@@ -1,3 +1,4 @@
+from pathlib import Path
 from typing import List
 
 from crewai import Agent, Crew, Process, Task
@@ -7,9 +8,13 @@ from crewai.project import CrewBase, agent, crew, task
 from crewai_tools import SerperDevTool
 
 
+def _family_knowledge_path() -> Path:
+    repo_root = Path(__file__).resolve().parents[2]
+    return repo_root / "knowledge" / "user_preference.txt"
+
+
 def _family_knowledge_source() -> TextFileKnowledgeSource:
-    # Path is relative to the project knowledge/ directory (repo root when running locally).
-    return TextFileKnowledgeSource(file_paths=["user_preference.txt"])
+    return TextFileKnowledgeSource(file_paths=[_family_knowledge_path()])
 
 
 @CrewBase

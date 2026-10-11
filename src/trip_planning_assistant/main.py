@@ -28,8 +28,7 @@ def _configure_logging() -> None:
     logging.basicConfig(level=level, format="%(levelname)s %(name)s: %(message)s")
 
 
-def _kickoff_inputs_from_args(argv: list[str] | None = None) -> dict[str, str]:
-    args = parse_args(argv)
+def _kickoff_inputs_from_args(args) -> dict[str, str]:
     trip_request = load_merged_trip_request(args)
     return build_kickoff_inputs(trip_request)
 
@@ -37,8 +36,9 @@ def _kickoff_inputs_from_args(argv: list[str] | None = None) -> dict[str, str]:
 def run(argv: list[str] | None = None):
     """Run the crew."""
     _configure_logging()
+    args = parse_args(argv)
     check_required_env()
-    inputs = _kickoff_inputs_from_args(argv)
+    inputs = _kickoff_inputs_from_args(args)
     logging.getLogger(__name__).info(
         "Starting trip plan for %s (%s to %s)",
         inputs["destination"],

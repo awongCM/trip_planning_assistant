@@ -31,6 +31,8 @@ Set **`OPENAI_API_KEY`** and **`SERPER_API_KEY`** in `.env`.
 
 ## Run
 
+Run all commands from the **repository root** (so family knowledge and `trip_plan.md` paths resolve correctly).
+
 ```bash
 uv run trip_planning_assistant
 ```
@@ -56,8 +58,7 @@ Note: For CLI overrides, prefer `uv run trip_planning_assistant` so arguments ar
 ## Tests
 
 ```bash
-uv sync
-uv pip install pytest
+uv sync --extra dev
 uv run pytest
 ```
 
