@@ -1,0 +1,20 @@
+destination: Tokyo
+start_date: 2026-04-10
+end_date: 2026-04-20
+home_airport: SFO
+budget: 12000
+budget_currency: USD
+pace: moderate
+interests:
+  - food
+  - culture
+  - kid-friendly activities
+travelers:
+  - role: adult
+    name: Parent 1
+  - role: adult
+    name: Parent 2
+  - role: child
+    name: Kid
+    age: 8
+trip_notes: Prefer walkable areas; one museum day max.
